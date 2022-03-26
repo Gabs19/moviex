@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/widgets.dart';
+import 'package:moviex/widget/navigationDrawerWidget.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 
@@ -11,6 +12,7 @@ class HomePage extends StatelessWidget{
   @override
   Widget build(BuildContext context){
     return Scaffold(
+      drawer: NavigationDrawerWidget(),
       appBar: AppBar(
         title: Text('Home'),
       ),
