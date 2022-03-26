@@ -22,16 +22,25 @@ class HomePage extends StatelessWidget{
             itemBuilder: (context, index) {
 
                 return ListTile(
-                  leading: Image.network(snapshot.data!.docs[index]['cartaz']),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.all(Radius.circular(12)),
+                  ),
+                  leading: ClipRRect(
+                    child: Image.network(snapshot.data!.docs[index]['cartaz']),
+                    borderRadius: const BorderRadius.all(Radius.circular(10)),
+                  ),
                   title: Text(snapshot.data!.docs[index]['nome'], style: new TextStyle(color: Colors.white),),
                   subtitle: Text(snapshot.data!.docs[index]['genero'], style: new TextStyle(color: Colors.white)),
                   tileColor: Colors.blueGrey,
+                  selected: false,
+                  selectedTileColor: Colors.black45,
+                  onLongPress: () {
+                    print('presionou');
+                  },
 
                 );
             },
             padding: EdgeInsets.all(16),
-
-
           );
         },
       )
