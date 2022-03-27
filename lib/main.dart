@@ -1,8 +1,7 @@
-import 'dart:async';
-
-import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:moviex/services/auth_service.dart';
+import 'package:provider/provider.dart';
 import 'firebase_options.dart';
 import 'MoviexApp.dart';
 
@@ -13,7 +12,12 @@ void main() async {
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
-  runApp(MoviexApp());
+  runApp(
+    MultiProvider(providers: [
+      ChangeNotifierProvider(create: (context) => AuthService(),),
+    ],
+      child: MoviexApp()),
+  );
 }
 
 

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:moviex/pages/home.dart';
+import 'package:moviex/widget/auth_check.dart';
 
 class MoviexApp extends StatelessWidget{
   const MoviexApp({Key? key}) : super(key: key) ;
@@ -12,7 +13,7 @@ class MoviexApp extends StatelessWidget{
       theme: ThemeData(
         primarySwatch: Colors.green,
       ),
-      home: HomePage(),
+      home: AuthCheck(),
     );
   }
 }
