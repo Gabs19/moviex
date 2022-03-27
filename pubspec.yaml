@@ -41,6 +41,7 @@ dependencies:
   firebase_auth: ^3.3.11
   provider: ^6.0.2
   camera: ^0.9.4+17
+  firebase_storage: ^10.2.9
 
 
 dev_dependencies:

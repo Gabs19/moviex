@@ -1,15 +1,47 @@
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:moviex/databases/db_firestore.dart';
 import 'package:moviex/pages/perfil.dart';
 import 'package:moviex/pages/restrict.dart';
+import 'package:moviex/services/auth_service.dart';
+import 'package:provider/provider.dart';
 
+// ignore: must_be_immutable
 class NavigationDrawerWidget extends StatelessWidget {
+
+
   final padding = EdgeInsets.symmetric(horizontal: 20);
 
-  final name = 'gabriel';
-  final email = 'gabs@gmail.com';
-  final urlImage = 'https://lh3.googleusercontent.com/a-/AOh14GhPhjpndc8XzXrDgm84B11xGo5B3xvo53-CVjPshg=s288-p-rw-no';
+  late FirebaseFirestore db;
+  late AuthService auth;
+
+  late  String name = '';
+  late String email = '';
+  late String urlImage = 'https://i1.wp.com/terracoeconomico.com.br/wp-content/uploads/2019/01/default-user-image.png?ssl=1';
+
+
+  NavigationDrawerWidget({required this.auth}){
+    _startNavigationDrawer();
+  }
+
+  _startNavigationDrawer() async{
+    await _startFirestore();
+    await _readData();
+  }
+
+  _startFirestore() {
+    db = DBFirestore.get();
+  }
+
+  _readData() async {
+    if( auth.usuario != null) {
+      final snapshot = await db.collection('user').doc(auth.usuario!.uid).get();
+      name = snapshot.get('nome');
+      email = snapshot.get('email');
+    }
+  }
 
   @override
   Widget build(BuildContext context){
@@ -30,6 +62,8 @@ class NavigationDrawerWidget extends StatelessWidget {
                   const SizedBox(height: 24),
                   Divider(color: Colors.white70),
                   buildMenuItem(text: 'validar email', icon: Icons.email_outlined,onClicked: () => selectedItem(context, 2)),
+                  const SizedBox(height: 16,),
+                  buildMenuItem(text: 'sair', icon: Icons.backspace_outlined, onClicked: () => selectedItem(context, 3))
                 ],
               ),
             )
@@ -97,6 +131,8 @@ class NavigationDrawerWidget extends StatelessWidget {
       case 1:
         Navigator.of(context).push(MaterialPageRoute(builder: (context) => Restrict()));
         break;
+      case 3:
+        context.read<AuthService>().logout();
     }
   }
 }

@@ -1,7 +1,10 @@
 import 'dart:io';
 
+import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
+import 'package:moviex/util/namefile.dart';
 
 class DocumentsPage extends StatefulWidget{
     DocumentsPage({Key?  key}): super(key: key);
@@ -15,6 +18,8 @@ class _DocumentsPageState extends State<DocumentsPage> {
   CameraController? controller;
   XFile? file;
   Size? size;
+
+  final FirebaseStorage storage = FirebaseStorage.instance;
 
   @override
   void initState() {
@@ -75,7 +80,7 @@ class _DocumentsPageState extends State<DocumentsPage> {
           child: _arquivoWidget(),
         ),
       ),
-      floatingActionButton: (file != null) ? FloatingActionButton.extended(onPressed: () => Navigator.pop(context) ,label: Text('Finalizar'),)
+      floatingActionButton: (file != null) ? FloatingActionButton.extended(onPressed: upload ,label: Text('Finalizar'),)
           : null,
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
@@ -133,6 +138,21 @@ class _DocumentsPageState extends State<DocumentsPage> {
       } on CameraException catch(e) {
         print(e.description);
       }
+    }
+  }
+
+  Future<void> upload() async{
+    XFile? selfie = file;
+    if (selfie != null){
+        File file = File(selfie.path);
+        try{
+          String ref = 'images/img-${DateTime.now().toString()}.jpg';
+          await storage.ref(ref).putFile(file);
+
+        } on FirebaseException catch(e) {
+          throw Exception('Erro no upload: ${e.code}');
+        }
+        Navigator.pop(context);
     }
   }
 }

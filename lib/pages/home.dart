@@ -2,17 +2,20 @@ import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/widgets.dart';
+import 'package:moviex/services/auth_service.dart';
 import 'package:moviex/widget/navigationDrawerWidget.dart';
+import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 
 class HomePage extends StatelessWidget{
   const HomePage({Key? key}) : super(key: key) ;
 
+  
   @override
   Widget build(BuildContext context){
     return Scaffold(
-      drawer: NavigationDrawerWidget(),
+      drawer: NavigationDrawerWidget(auth: context.read<AuthService>()),
       appBar: AppBar(
         title: Text('Home'),
       ),

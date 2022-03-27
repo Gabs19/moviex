@@ -1,7 +1,10 @@
 
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:moviex/pages/documentsPage.dart';
+import 'package:moviex/services/auth_service.dart';
+import 'package:provider/provider.dart';
 
 class LoginPage extends StatefulWidget{
   LoginPage({Key? key}) : super(key: key);
@@ -11,9 +14,12 @@ class LoginPage extends StatefulWidget{
 }
 
 class _LoginPageState extends State<LoginPage> {
+  final FirebaseStorage storage = FirebaseStorage.instance;
+
   final formKey = GlobalKey<FormState>();
   final email = TextEditingController();
   final senha = TextEditingController();
+  final nome = TextEditingController();
 
   bool isLogin = true;
   late String titulo;
@@ -22,11 +28,18 @@ class _LoginPageState extends State<LoginPage> {
   late String selfie = "";
   late bool signIn = false;
 
+  bool loading = false;
+
 
   @override
   void initState() {
     super.initState();
     setFormAction(true);
+    loadImage();
+  }
+
+  loadImage() async{
+    var ref = (await storage.ref('images').child(''));
   }
 
   setFormAction(bool acao){
@@ -45,6 +58,24 @@ class _LoginPageState extends State<LoginPage> {
         signIn = true;
       }
     });
+  }
+
+  login() async {
+    setState(() => loading = true);
+    try {
+      await context.read<AuthService>().login(email.text, senha.text);
+    } on AuthException catch(e){
+      setState(() => loading = false);
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.message)));
+    }
+  }
+
+  register()  async{
+    try {
+      await context.read<AuthService>().registrar(email.text, senha.text,nome.text);
+    } on AuthException catch(e){
+      ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.message)));
+    }
   }
 
   @override
@@ -72,7 +103,7 @@ class _LoginPageState extends State<LoginPage> {
                   Padding(
                     padding: EdgeInsets.all(24),
                     child: TextFormField(
-                      controller: email,
+                      controller: nome,
                       decoration: InputDecoration(
                         border: OutlineInputBorder(),
                         labelText: "Nome",
@@ -151,11 +182,26 @@ class _LoginPageState extends State<LoginPage> {
                 Padding(
                   padding: EdgeInsets.all(24),
                   child: ElevatedButton(
-                    onPressed: () => {}
-                    ,
+                    onPressed: () {
+                      if (formKey.currentState!.validate()) {
+                          if (isLogin) {
+                            login();
+                          } else {
+                            register();
+                          }
+                      }
+                    },
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
+                      children: (loading)
+                      ? [
+                        Padding(
+                          padding: EdgeInsets.all(16),
+                          child: SizedBox(width: 24, height: 24, child: CircularProgressIndicator(color: Colors.white,),),
+                        )
+                      ]
+                      :
+                      [
                         Icon(Icons.check),
                         Padding(
                           padding: EdgeInsets.all(16),
