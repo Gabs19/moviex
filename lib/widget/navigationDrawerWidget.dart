@@ -3,14 +3,14 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:moviex/databases/db_firestore.dart';
-import 'package:moviex/pages/perfil.dart';
+import 'package:moviex/pages/profile.dart';
 import 'package:moviex/pages/restrict.dart';
+import 'package:moviex/pages/validate_email.dart';
 import 'package:moviex/services/auth_service.dart';
 import 'package:provider/provider.dart';
 
 // ignore: must_be_immutable
 class NavigationDrawerWidget extends StatelessWidget {
-
 
   final padding = EdgeInsets.symmetric(horizontal: 20);
 
@@ -126,13 +126,17 @@ class NavigationDrawerWidget extends StatelessWidget {
 
     switch(index) {
       case 0:
-        Navigator.of(context).push(MaterialPageRoute(builder: (context) => Perfil()));
+        Navigator.of(context).push(MaterialPageRoute(builder: (context) => Profile(auth: context.read<AuthService>(),)));
         break;
       case 1:
         Navigator.of(context).push(MaterialPageRoute(builder: (context) => Restrict()));
         break;
+      case 2:
+        Navigator.of(context).push(MaterialPageRoute(builder: (context) => ValidateEmail()));
+        break;
       case 3:
         context.read<AuthService>().logout();
+        break;
     }
   }
 }
