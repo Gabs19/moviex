@@ -1,10 +1,14 @@
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:moviex/pages/documentsPage.dart';
 import 'package:moviex/services/auth_service.dart';
 import 'package:provider/provider.dart';
+
+
 
 class LoginPage extends StatefulWidget{
   LoginPage({Key? key}) : super(key: key);
@@ -15,6 +19,7 @@ class LoginPage extends StatefulWidget{
 
 class _LoginPageState extends State<LoginPage> {
   final FirebaseStorage storage = FirebaseStorage.instance;
+  late Future<int> sizedb = FirebaseFirestore.instance.collection("user").snapshots().length;
 
   final formKey = GlobalKey<FormState>();
   final email = TextEditingController();
@@ -30,6 +35,7 @@ class _LoginPageState extends State<LoginPage> {
 
   bool loading = false;
 
+  late String ref = '';
 
   @override
   void initState() {
@@ -39,7 +45,7 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   loadImage() async{
-    var ref = (await storage.ref('images').child(''));
+    ref = (await storage.ref('images').child('img-${sizedb}.jpg')) as String;
   }
 
   setFormAction(bool acao){
@@ -214,6 +220,8 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ),
                 ),
+                FloatingActionButton.extended(onPressed: () {}, icon: Icon(Icons.security), label: Text('Faça login com o goole')),
+                SizedBox(height: 10,),
                 TextButton(onPressed: () => setFormAction(!isLogin), child: Text(toggleButtton))
               ],
             ),
