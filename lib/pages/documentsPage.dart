@@ -4,7 +4,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
-import 'package:moviex/util/namefile.dart';
+
 
 class DocumentsPage extends StatefulWidget{
     DocumentsPage({Key?  key}): super(key: key);

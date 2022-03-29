@@ -4,9 +4,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+
 import 'package:moviex/pages/documentsPage.dart';
 import 'package:moviex/services/auth_service.dart';
 import 'package:provider/provider.dart';
+
+import '../services/google.dart';
 
 
 
@@ -82,6 +85,10 @@ class _LoginPageState extends State<LoginPage> {
     } on AuthException catch(e){
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(e.message)));
     }
+  }
+
+  google() async {
+    await context.read<GoogleSignInProvider>().googleLogin();
   }
 
   @override
@@ -220,8 +227,14 @@ class _LoginPageState extends State<LoginPage> {
                     ),
                   ),
                 ),
-                FloatingActionButton.extended(onPressed: () {}, icon: Icon(Icons.security), label: Text('Faça login com o goole')),
-                SizedBox(height: 10,),
+
+                Visibility(
+                  visible: true,
+                  child:
+                  FloatingActionButton.extended(onPressed: google
+                      , icon: Icon(Icons.security), label: Text('Faça login com o goole')),
+                ),
+
                 TextButton(onPressed: () => setFormAction(!isLogin), child: Text(toggleButtton))
               ],
             ),

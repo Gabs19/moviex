@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 import 'package:moviex/databases/db_firestore.dart';
 
 class AuthException implements Exception {
@@ -47,6 +48,7 @@ class AuthService extends ChangeNotifier{
      await db.collection('user').doc(usuario!.uid).set({
        'nome' : nome,
        'email' : email,
+       'selfie' : 'https://i1.wp.com/terracoeconomico.com.br/wp-content/uploads/2019/01/default-user-image.png?ssl=1',
      });
 
      _getUser();
