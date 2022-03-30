@@ -22,7 +22,7 @@ Além de claro você saber sobre criticas sobre os filmes.
 #### Área de Registro
 - Login usando email e senha.
 - cadastro usando nome, email e senha.
-- Selfie exigida no cadastro.
+- Selfie no cadastro.
 
 #### Áreas após logar
 - Home: lista dos filmes.
