@@ -16,15 +16,24 @@ class _RestrictState extends State<Restrict>{
   Widget build(BuildContext context) => isEmailVerified == false ?
       Scaffold(
         appBar: AppBar(
-          title: Text('Criticas'),
+          title: Text('Restrict'),
         ),
-        body: Text(
-          'Por favor, valide seu email.',
-          style: TextStyle(
-            fontSize: 35,
-            fontWeight: FontWeight.bold,
-            letterSpacing: -1.5,
-          ),
+        body:
+        Padding (
+          padding: EdgeInsets.only(left: 30),
+          child: Column (
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: [
+              Text(
+                'Por favor, valide seu email.',
+                style: TextStyle(
+                  fontSize: 30,
+                  fontWeight: FontWeight.bold,
+                  letterSpacing: -1.5,
+                ),
+              ),
+            ],
+          ) ,
         ),
       )
       :
@@ -41,24 +50,29 @@ class _RestrictState extends State<Restrict>{
             itemCount: snapshot.data!.docs.length,
             itemBuilder: (context, index) {
 
-              return ListTile(
-                onTap: () {
-                  DocumentSnapshot snap = snapshot.data!.docs[index];
-                  showDialogFunc(context,snap);
-                },
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.all(Radius.circular(12)),
-                ),
-                leading: ClipRRect(
-                  child: Image.network(snapshot.data!.docs[index]['cartaz']),
-                  borderRadius: const BorderRadius.all(Radius.circular(10)),
-                ),
-                title: Text(snapshot.data!.docs[index]['nome'],style: new TextStyle(color: Colors.white,),),
-                subtitle: Text("Nota: " + snapshot.data!.docs[index]['nota'] + "/10", style: new TextStyle(color: Colors.white)),
-                tileColor: Colors.blueGrey,
-                selected: false,
-                selectedTileColor: Colors.black45,
-                trailing: double.parse(snapshot.data!.docs[index]['nota']) > 7 ? Icon(Icons.verified, color: Colors.green,) : Icon(Icons.warning, color:Colors.red),
+              return Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  ListTile(
+                    onTap: () {
+                      DocumentSnapshot snap = snapshot.data!.docs[index];
+                      showDialogFunc(context,snap);
+                    },
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(12)),
+                    ),
+                    leading: ClipRRect(
+                      child: Image.network(snapshot.data!.docs[index]['cartaz']),
+                      borderRadius: const BorderRadius.all(Radius.circular(10)),
+                    ),
+                    title: Text(snapshot.data!.docs[index]['nome'],style: new TextStyle(color: Colors.white,),),
+                    subtitle: Text("Nota: " + snapshot.data!.docs[index]['nota'] + "/10", style: new TextStyle(color: Colors.white),),
+                    tileColor: Colors.blueGrey,
+                    selected: false,
+                    selectedTileColor: Colors.black45,
+                    trailing: double.parse(snapshot.data!.docs[index]['nota']) > 7 ? Icon(Icons.verified, color: Colors.green,) : Icon(Icons.warning, color:Colors.red),
+                  )
+                ],
               );
             },
             padding: EdgeInsets.all(16),

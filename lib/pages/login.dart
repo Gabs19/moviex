@@ -60,13 +60,13 @@ class _LoginPageState extends State<LoginPage> {
       isLogin = acao;
       if(isLogin){
         titulo = 'Bem vindo';
-        actionButton = 'Sign in';
+        actionButton = 'Entrar';
         toggleButtton = 'Ainda não tem conta? Cadastre-se agora.';
         signIn = false;
         _isButtonDisabled = false;
       } else {
         titulo = 'Crie sua conta';
-        actionButton = 'Sign up';
+        actionButton = 'Cadastrar';
         toggleButtton = 'Voltar ao login.';
         selfie = 'tire uma selfie';
         signIn = true;
@@ -120,6 +120,7 @@ class _LoginPageState extends State<LoginPage> {
                     fontSize: 35,
                     fontWeight: FontWeight.bold,
                     letterSpacing: -1.5,
+                    color: Color.fromRGBO(27, 83, 22, 100)
                   ),
                 ),
                 Visibility(
