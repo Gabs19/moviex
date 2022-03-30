@@ -48,7 +48,7 @@ class AuthService extends ChangeNotifier{
      await db.collection('user').doc(usuario!.uid).set({
        'nome' : nome,
        'email' : email,
-       'selfie' : 'https://i1.wp.com/terracoeconomico.com.br/wp-content/uploads/2019/01/default-user-image.png?ssl=1',
+       'selfie' : 'img-2022-03-27 11:50:27.880384.jpg',
      });
 
      _getUser();

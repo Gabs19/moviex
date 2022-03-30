@@ -18,7 +18,14 @@ class _RestrictState extends State<Restrict>{
         appBar: AppBar(
           title: Text('Criticas'),
         ),
-        body: Text("Por favor validar email"),
+        body: Text(
+          'Por favor, valide seu email.',
+          style: TextStyle(
+            fontSize: 35,
+            fontWeight: FontWeight.bold,
+            letterSpacing: -1.5,
+          ),
+        ),
       )
       :
   Scaffold(
@@ -70,7 +77,7 @@ class _RestrictState extends State<Restrict>{
                 borderRadius: BorderRadius.circular(10),
                 color: Colors.white,
               ),
-              padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 2),
+              padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 10),
               width: MediaQuery.of(context).size.width * 0.7,
               height: 550,
               child: Column(
@@ -80,10 +87,10 @@ class _RestrictState extends State<Restrict>{
                     child: Image.network(snap['cartaz'], width: 500, height: 300,),
                     borderRadius: const BorderRadius.all(Radius.circular(10)),
                   ),
-                  SizedBox(height: 5,),
+                  SizedBox(height: 10,),
                   Text(
                     snap['nome'],
-                    textAlign: TextAlign.center,
+                    textAlign: TextAlign.start,
                     style: TextStyle(
                       fontSize: 20,
                       color: Colors.black,
@@ -93,7 +100,7 @@ class _RestrictState extends State<Restrict>{
                   SizedBox(height: 5,),
                   Text(
                     snap['critica'],
-                    textAlign: TextAlign.center,
+                    textAlign: TextAlign.justify,
                     style: TextStyle(
                       fontSize: 15,
                       color: Colors.black,

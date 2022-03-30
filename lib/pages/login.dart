@@ -37,6 +37,7 @@ class _LoginPageState extends State<LoginPage> {
   late bool signIn = false;
 
   bool loading = false;
+  bool _isButtonDisabled = true;
 
   late String ref = '';
 
@@ -45,7 +46,10 @@ class _LoginPageState extends State<LoginPage> {
     super.initState();
     setFormAction(true);
     loadImage();
+
   }
+
+
 
   loadImage() async{
     ref = (await storage.ref('images').child('img-${sizedb}.jpg')) as String;
@@ -59,14 +63,22 @@ class _LoginPageState extends State<LoginPage> {
         actionButton = 'Sign in';
         toggleButtton = 'Ainda não tem conta? Cadastre-se agora.';
         signIn = false;
+        _isButtonDisabled = false;
       } else {
         titulo = 'Crie sua conta';
         actionButton = 'Sign up';
         toggleButtton = 'Voltar ao login.';
         selfie = 'tire uma selfie';
         signIn = true;
+        _isButtonDisabled = true;
       }
     });
+  }
+
+  _habiliarSign() {
+    Navigator.push(context,
+        MaterialPageRoute(builder: (context) => DocumentsPage(), fullscreenDialog: true));
+    setState(() => _isButtonDisabled = !_isButtonDisabled);
   }
 
   login() async {
@@ -173,8 +185,7 @@ class _LoginPageState extends State<LoginPage> {
                     Padding(
                       padding: EdgeInsets.symmetric(horizontal: 100, vertical: 3),
                       child: ElevatedButton(
-                        onPressed: () => Navigator.push(context,
-                            MaterialPageRoute(builder: (context) => DocumentsPage(), fullscreenDialog: true)),
+                        onPressed: _habiliarSign,
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
@@ -195,7 +206,7 @@ class _LoginPageState extends State<LoginPage> {
                 Padding(
                   padding: EdgeInsets.all(24),
                   child: ElevatedButton(
-                    onPressed: () {
+                    onPressed: _isButtonDisabled ? null : () {
                       if (formKey.currentState!.validate()) {
                           if (isLogin) {
                             login();
@@ -229,10 +240,10 @@ class _LoginPageState extends State<LoginPage> {
                 ),
 
                 Visibility(
-                  visible: true,
+                  visible: false,
                   child:
-                  FloatingActionButton.extended(onPressed: google
-                      , icon: Icon(Icons.security), label: Text('Faça login com o goole')),
+                  FloatingActionButton.extended(onPressed: () => {},
+                      icon: Icon(Icons.security), label: Text('Faça login com o goole')),
                 ),
 
                 TextButton(onPressed: () => setFormAction(!isLogin), child: Text(toggleButtton))

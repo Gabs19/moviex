@@ -1,6 +1,7 @@
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:moviex/databases/db_firestore.dart';
@@ -22,6 +23,7 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget>{
   final padding = EdgeInsets.symmetric(horizontal: 20);
 
   late FirebaseFirestore db;
+  late FirebaseStorage fs;
   late  String name = '';
   late String urlImage = 'https://i1.wp.com/terracoeconomico.com.br/wp-content/uploads/2019/01/default-user-image.png?ssl=1';
 
@@ -39,16 +41,18 @@ class _NavigationDrawerWidgetState extends State<NavigationDrawerWidget>{
 
   _startFirestore() {
     db = DBFirestore.get();
+    fs = FirebaseStorage.instance;
   }
 
   _readData() async {
 
       final snapshot = await db.collection('user').doc(FirebaseAuth.instance.currentUser!.uid).get();
+      String ref = await fs.ref('images').child('img-2022-03-27 11:50:27.880384.jpg').getDownloadURL();
 
       setState(() {
         name = snapshot.get('nome');
+        urlImage = ref;
       });
-
   }
 
   @override

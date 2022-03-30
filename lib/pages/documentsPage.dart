@@ -1,9 +1,12 @@
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
+import 'package:moviex/databases/db_firestore.dart';
 
 
 class DocumentsPage extends StatefulWidget{
@@ -20,11 +23,15 @@ class _DocumentsPageState extends State<DocumentsPage> {
   Size? size;
 
   final FirebaseStorage storage = FirebaseStorage.instance;
+  late FirebaseFirestore firestore;
+  late FirebaseAuth auth = FirebaseAuth.instance;
 
   @override
   void initState() {
     super.initState();
     _loadCamera();
+
+    firestore = DBFirestore.get();
   }
 
   _loadCamera() async {
@@ -148,6 +155,14 @@ class _DocumentsPageState extends State<DocumentsPage> {
         try{
           String ref = 'images/img-${DateTime.now().toString()}.jpg';
           await storage.ref(ref).putFile(file);
+
+          if(auth.currentUser != null){
+            final snapshot = await firestore.collection('user').doc(FirebaseAuth.instance.currentUser!.uid).set({
+                'selfie' : 'img-${DateTime.now().toString()}.jpg',
+                },
+              SetOptions(merge: true),
+            );
+          }
 
         } on FirebaseException catch(e) {
           throw Exception('Erro no upload: ${e.code}');

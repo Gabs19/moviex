@@ -5,8 +5,6 @@ import 'package:moviex/databases/db_firestore.dart';
 import 'package:moviex/pages/documentsPage.dart';
 import 'package:moviex/services/auth_service.dart';
 
-
-
 class Profile extends StatelessWidget{
 
   late FirebaseFirestore db;
@@ -38,7 +36,6 @@ class Profile extends StatelessWidget{
   update() async{
     await db.collection('user').doc(auth.usuario!.uid).set({
       'nome' : nome.text,
-      'url' : 'img-2022-03-27 11:50:27.880384.jpg'
     },
       SetOptions(merge: true),
     );
@@ -68,27 +65,6 @@ class Profile extends StatelessWidget{
                     letterSpacing: -1.5,
                   ),
                 ),
-                SizedBox(height: 10,),
-                Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 10, vertical: 3),
-                  child: ElevatedButton(
-                    onPressed: () => Navigator.push(context,
-                        MaterialPageRoute(builder: (context) => DocumentsPage(), fullscreenDialog: true)),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.all(16),
-                          child: Text(
-                              "Tire uma nova Selfie",
-                              style: TextStyle(fontSize: 16)
-                          ),
-                        ),
-                        Icon(Icons.camera_alt),
-                      ],
-                    ),
-                  ),
-                ),
                 SizedBox(height: 5,),
                 Padding(
                   padding: EdgeInsets.all(24),
@@ -113,6 +89,9 @@ class Profile extends StatelessWidget{
                     onPressed: () {
                       if(formKey.currentState!.validate()){
                         update();
+                        final snackbar = SnackBar(content: Text('Nome atualizado com sucesso'));
+                        ScaffoldMessenger.of(context).showSnackBar(snackbar);
+                        Navigator.pop(context);
                       }
                     },
                     child: Row(
