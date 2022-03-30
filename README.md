@@ -1,16 +1,38 @@
 # moviex
 
-A new Flutter project.
+O trailer a um clique de assistir..
 
-## Getting Started
+## sobre o aplicativo
 
-This project is a starting point for a Flutter application.
+o moviex é um aplicativo onde você pode ver trailers dos filmes que estão nos cinemas, ou ainda vão estreiar com mais facilidade sem precisar ir para o youtube procurar.
+Além de claro você saber sobre criticas sobre os filmes.
 
-A few resources to get you started if this is your first Flutter project:
+## Ferramentas e tecnologias usadas
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+- Figma
+- Android Studio 
+- Emulador Android
+- Flutter
+- Firebase
+- Documentação [Flutter](https://docs.flutter.dev/get-started/install)
+- Documentação [FluterFire](https://firebase.flutter.dev/docs/cli/)
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Funcionalidades atuais
+
+#### Área de Registro
+- Login usando email e senha.
+- cadastro usando nome, email e senha.
+- Selfie exigida no cadastro.
+
+#### Áreas após logar
+- Home: lista dos filmes.
+- Restrito(Criticas): lista de Criticas dos filmes.
+- Perfil
+- Validação de Email.
+- Sair da aplicação.
+
+## Funcionalidades Futuras
+
+- Escrever critica para o filme. (inserir dados no firestore)
+- Login com google. (aprender um nova forma de registro usando o google)
+- Usar selfie no menu deslizante. (Pois da forma que fiz não consegui recuperar a ref da imagem corretamente e usar para mostra no header do menu deslizante)
